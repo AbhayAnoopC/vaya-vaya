@@ -73,16 +73,18 @@ const Map = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		padding: 24,
-		backgroundColor: "grey",
-	},
-	contentContainer: {
-		flex: 1,
-		alignItems: "center",
+		backgroundColor: 'grey',
+		overflow: 'hidden',
+		alignItems: 'center',
+		justifyContent: 'center',
+
 	},
 	map: {
-		width: "100%",
-		height: "78%",
+		...StyleSheet.absoluteFillObject,
+		width: '100%',
+		saspectRatio: 16 / 9,
+		borderRadius: 10,
+		height: '60%'
 	},
 });
 
