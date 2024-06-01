@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Button } from "react-native";
 import CuisineClickable from "./CuisineClickable";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, setLikes, selectLikes } from "../slices/navSlice";
 
 // const CuisineGrid = () => {
 // 	const items = Array.from(
@@ -17,26 +19,29 @@ import CuisineClickable from "./CuisineClickable";
 // 	);
 // };
 
-const cuisines = ["Italian", "Chinese", "Mexican", "Indian", "Thai", "French", "Peruvian", "American",
-	"British", "Japanese"];
+const cuisines = [
+	"Italian",
+	"Chinese",
+	"Mexican",
+	"Indian",
+	"Thai",
+	"French",
+	"Peruvian",
+	"American",
+	"British",
+	"Japanese",
+];
 
-const CuisineGrid = ({ selectedLikes, setSelectedLikes, user }) => {
+const CuisineGrid = ({ selectedLikes, setSelectedLikes }) => {
 	const [selected, setSelected] = useState([]);
-
+	const user = useSelector(selectUser);
+	const dispatch = useDispatch();
+	const likes = useSelector(selectLikes);
 	// if (!setSelectedLikes) {
 	// 	console.error("setSelectedLikes is undefined");
 	// }
 	const toggleSelection = (cuisine) => {
-		// console.log(setSelectedLikes);
-		// setSelectedLikes((prevSelected) => {
-		// 	const isSelected = prevSelected.includes(cuisine);
-		// 	if (isSelected) {
-		// 		return prevSelected.filter((item) => item !== cuisine);
-		// 	} else {
-		// 		return [...prevSelected, cuisine];
-		// 	}
-		// });
-		console.log("I am in the Grid: ", user);
+		// console.log("I am in the Grid: ", user);
 		setSelected((prevSelected) => {
 			const isSelected = prevSelected && prevSelected.includes(cuisine);
 			if (isSelected) {
@@ -45,6 +50,7 @@ const CuisineGrid = ({ selectedLikes, setSelectedLikes, user }) => {
 				return [...prevSelected, cuisine];
 			}
 		});
+		console.log(selected);
 	};
 	// React.useEffect(() => {
 	// 	console.log("setSelectedLikes:", setSelectedLikes);
@@ -53,6 +59,11 @@ const CuisineGrid = ({ selectedLikes, setSelectedLikes, user }) => {
 	// 		console.error("setSelectedLikes is not a function");
 	// 	}
 	// }, [selected, setSelectedLikes]);
+
+	const saveLikes = () => {
+		dispatch(setLikes({ likes: selected }));
+		console.log("These are the final likes: ", likes);
+	};
 
 	return (
 		<View style={styles.grid}>
@@ -64,12 +75,10 @@ const CuisineGrid = ({ selectedLikes, setSelectedLikes, user }) => {
 					toggleSelection={() => toggleSelection(cuisine)}
 				/>
 			))}
-			<Button title="Select Likes" onPress={() => setSelectedLikes(selected)} />
+			<Button title="Select Likes" onPress={saveLikes} />
 		</View>
 	);
 };
-
-
 
 const styles = StyleSheet.create({
 	grid: {
