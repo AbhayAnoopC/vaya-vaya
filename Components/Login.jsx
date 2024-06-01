@@ -1,12 +1,24 @@
-import { View, Text, StyleSheet, ActivityIndicatorBase } from "react-native";
-import React from "react";
+import {
+	View,
+	TextInput,
+	Button,
+	StyleSheet,
+	ActivityIndicator,
+	KeyboardAvoidingView,
+	Keyboard,
+	TouchableWithoutFeedback,
+} from "react-native";
+import { useState } from "react";
 import { FIREBASE_AUTH } from "../FirebaseConfig";
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 } from "firebase/auth";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Login = () => {
+const Stack = createNativeStackNavigator();
+
+const Login = ({ navigation }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
@@ -40,35 +52,43 @@ const Login = () => {
 			alert("Sign up failed: " + error.message);
 		} finally {
 			setLoading(false);
+			navigation.navigate("Cuisine");
 		}
 	};
 
 	return (
-		<View style={styles.container}>
-			<TextInput
-				value={email}
-				style={styles.input}
-				placeholder="Email"
-				autoCapitalize="none"
-				onChangeText={(text) => setEmail(text)}
-			></TextInput>
-			<TextInput
-				secureTextEntry={true}
-				value={password}
-				style={styles.input}
-				placeholder="Password"
-				autoCapitalize="none"
-				onChangeText={(text) => setPassword(text)}
-			></TextInput>
-			{loading ? (
-				<ActivityIndicatorBase szie="large" />
-			) : (
-				<>
-					<Button title="Login" onPress={() => {}}></Button>
-					<Button title="Create account" onPress={() => {}}></Button>
-				</>
-			)}
-		</View>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+			<View style={styles.container}>
+				<KeyboardAvoidingView
+					style={styles.keyboardAvoidingView}
+					behavior="padding"
+				>
+					<TextInput
+						value={email}
+						style={styles.inputs}
+						placeholder="Email"
+						autoCapitalize="none"
+						onChangeText={(text) => setEmail(text)}
+					></TextInput>
+					<TextInput
+						secureTextEntry={true}
+						value={password}
+						style={styles.inputs}
+						placeholder="Password"
+						autoCapitalize="none"
+						onChangeText={(text) => setPassword(text)}
+					></TextInput>
+					{loading ? (
+						<ActivityIndicator szie="large" color="#0000ff" />
+					) : (
+						<>
+							<Button title="Login" onPress={signIn}></Button>
+							<Button title="Create account" onPress={signUp}></Button>
+						</>
+					)}
+				</KeyboardAvoidingView>
+			</View>
+		</TouchableWithoutFeedback>
 	);
 };
 
@@ -80,5 +100,16 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 	},
-	inputs: {},
+	keyboardAvoidingView: {
+		flex: 1,
+		justifyContent: "center",
+	},
+	inputs: {
+		marginVertical: 4,
+		height: 50,
+		borderWidth: 1,
+		borderRadius: 4,
+		padding: 10,
+		backgroundColor: "#fff",
+	},
 });
