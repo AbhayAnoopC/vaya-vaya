@@ -1,21 +1,18 @@
-
 import React, { useCallback, useRef } from 'react';
 import { View, Text, StyleSheet, Button, SafeAreaView } from 'react-native';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
 import Map from './Map.jsx'
 
 const Swipe = () => {
-  const bottomSheetRef = useRef(null);
+	const bottomSheetRef = useRef(null);
 
-  const handleSheetChanges = useCallback((index) => {
-    console.log('handleSheetChanges', index);
-  }, []);
+	const handleSheetChanges = useCallback((index) => {
+		console.log("handleSheetChanges", index);
+	}, []);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-
       <View style={styles.container}>
         {/* <Button title="do someting" /> */}
         <View style={styles.container}>
@@ -52,3 +49,4 @@ const styles = StyleSheet.create({
   }
 });
 export default Swipe
+
