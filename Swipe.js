@@ -17,19 +17,16 @@ const Swipe = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
 
       <View style={styles.container}>
-<<<<<<< HEAD
-        <MapView style={styles.map} />
-=======
         {/* <Button title="do someting" /> */}
         <View style={styles.container}>
-        <Map/>
+          <Map />
 
-    </View>
->>>>>>> 88a22a7842d1bf7309d6ce329bffedff5dc258f3
+        </View>
         <BottomSheet
           ref={bottomSheetRef}
           onChange={handleSheetChanges}
           snapPoints={['40%', '90%']}
+          //overDragResistanceFactor = {10}
           opacity={1.9}
         >
           <BottomSheetView style={styles.contentContainer}>
@@ -37,30 +34,21 @@ const Swipe = () => {
           </BottomSheetView>
         </BottomSheet>
       </View>
-
     </GestureHandlerRootView>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 5,
+    padding: 2,
     backgroundColor: 'grey',
     width: '100%',
-    // borderRadius: '20'
   },
 
   contentContainer: {
     flex: 1,
-    alignItems: 'center',
-  },
-  map: {
-    width: '100%',
-    height: '60%',
-
+    alignItems: "center",
   }
-})
-
+});
 export default Swipe
