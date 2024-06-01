@@ -15,14 +15,6 @@ import { store } from "./store.js";
 
 const Stack = createNativeStackNavigator();
 
-const InsideStack = createNativeStackNavigator();
-
-const InsideLayout = () => {
-	<InsideStack.Navigator>
-		<InsideStack.Screen name="Map" component={Swipe} />
-	</InsideStack.Navigator>;
-};
-
 const App = () => {
 	const [user, setUser] = useState(null);
 
