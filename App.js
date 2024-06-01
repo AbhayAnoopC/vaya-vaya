@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { View, Text, StyleSheet, Button, SafeAreaView } from "react-native";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import MapView from "react-native-maps";
@@ -23,6 +23,7 @@ const App = () => {
 			setUser(user);
 		});
 	}, []);
+  
 	return (
 		<Provider store={store}>
 			<NavigationContainer>
@@ -64,19 +65,23 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		padding: 24,
-		backgroundColor: "grey",
-	},
-	contentContainer: {
-		flex: 1,
-		alignItems: "center",
-	},
-	map: {
-		width: "100%",
-		height: "60%",
-	},
+  container: {
+    flex: 1,
+    backgroundColor: 'grey',
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  contentContainer: {
+    flex: 1,
+    padding: 24,
+    alignItems: 'center',
+  },
+  map: {
+    width: '100%',
+    aspectRatio: 16 / 9,
+    borderRadius: 20,
+  },
+
 });
 
 export default App;
