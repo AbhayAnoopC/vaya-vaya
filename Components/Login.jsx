@@ -40,6 +40,7 @@ const Login = ({ navigation }) => {
 			alert("Sign in failed: " + error.message);
 		} finally {
 			setLoading(false);
+			navigation.navigate("Inside");
 		}
 	};
 
@@ -56,17 +57,20 @@ const Login = ({ navigation }) => {
 				email,
 				password
 			);
-			// console.log(response);
-			// setUser(response.user.email);
-			dispatch(setUser({ user: response.user }));
-			await createUserInDatabase(response.user.email); //trying to store in database
-			// alert("Check your emails!");
+			dispatch(
+				setUser({
+					displayName: response.user.displayName,
+					email: response.user.email,
+					uid: response.user.uid,
+				})
+			);
+			setLoading(false);
+			navigation.navigate("Cuisine");
 		} catch (error) {
 			console.log(error);
 			alert("Sign up failed: " + error.message);
 		} finally {
 			setLoading(false);
-			navigation.navigate("Cuisine");
 		}
 	};
 

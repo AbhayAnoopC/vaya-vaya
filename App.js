@@ -28,7 +28,6 @@ const App = () => {
 
 	useEffect(() => {
 		onAuthStateChanged(FIREBASE_AUTH, (user) => {
-			console.log("user", user);
 			setUser(user);
 		});
 	}, []);
@@ -38,6 +37,7 @@ const App = () => {
 				<Stack.Navigator initialRouteName="Login">
 					{user ? (
 						<>
+							{console.log("Im in A")}
 							<Stack.Screen
 								name="Inside"
 								component={Swipe}
@@ -50,11 +50,20 @@ const App = () => {
 							/>
 						</>
 					) : (
-						<Stack.Screen
-							name="Login"
-							component={Login}
-							options={{ headerShown: false }}
-						/>
+						<>
+							<Stack.Screen
+								name="Login"
+								component={Login}
+								options={{ headerShown: false }}
+							/>
+							{console.log("Im in B")}
+
+							<Stack.Screen
+								name="Inside"
+								component={Swipe}
+								options={{ headerShown: false }}
+							/>
+						</>
 					)}
 				</Stack.Navigator>
 			</NavigationContainer>

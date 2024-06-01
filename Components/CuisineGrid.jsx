@@ -3,21 +3,8 @@ import { View, StyleSheet, Button } from "react-native";
 import CuisineClickable from "./CuisineClickable";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, setLikes, selectLikes } from "../slices/navSlice";
-
-// const CuisineGrid = () => {
-// 	const items = Array.from(
-// 		{ length: 15 },
-// 		(_, index) => `Hello World ${index + 1}`
-// 	);
-
-// 	return (
-// 		<View style={styles.grid}>
-// 			{items.map((item, index) => (
-// 				<CuisineClickable key={index} text={item} />
-// 			))}
-// 		</View>
-// 	);
-// };
+import { getDatabase, ref, set } from "firebase/database";
+import { db } from "../FirebaseConfig";
 
 const cuisines = [
 	"Italian",
@@ -32,37 +19,57 @@ const cuisines = [
 	"Japanese",
 ];
 
-const CuisineGrid = ({ selectedLikes, setSelectedLikes }) => {
+const CuisineGrid = ({ navigation }) => {
 	const [selected, setSelected] = useState([]);
+	const [cuisineLikeDict, setCuisineLikeDict] = useState({
+		Italian: false,
+		Chinese: false,
+		Mexican: false,
+		Indian: false,
+		Thai: false,
+		French: false,
+		Peruvian: false,
+		American: false,
+		British: false,
+		Japanese: false,
+	});
+	const [cuisineDislikeDict, setCuisineDislikeDict] = useState({
+		Italian: false,
+		Chinese: false,
+		Mexican: false,
+		Indian: false,
+		Thai: false,
+		French: false,
+		Peruvian: false,
+		American: false,
+		British: false,
+		Japanese: false,
+	});
 	const user = useSelector(selectUser);
 	const dispatch = useDispatch();
 	const likes = useSelector(selectLikes);
-	// if (!setSelectedLikes) {
-	// 	console.error("setSelectedLikes is undefined");
-	// }
 	const toggleSelection = (cuisine) => {
-		// console.log("I am in the Grid: ", user);
-		setSelected((prevSelected) => {
-			const isSelected = prevSelected && prevSelected.includes(cuisine);
-			if (isSelected) {
-				return prevSelected.filter((item) => item !== cuisine);
-			} else {
-				return [...prevSelected, cuisine];
-			}
-		});
-		console.log(selected);
+		setCuisineLikeDict((prevState) => ({
+			...prevState,
+			[cuisine]: !prevState[cuisine], // Toggle the value of the specified cuisine
+		}));
 	};
-	// React.useEffect(() => {
-	// 	console.log("setSelectedLikes:", setSelectedLikes);
-	// 	setSelectedLikes(selected);
-	// 	if (typeof setSelectedLikes !== "function") {
-	// 		console.error("setSelectedLikes is not a function");
-	// 	}
-	// }, [selected, setSelectedLikes]);
 
-	const saveLikes = () => {
-		dispatch(setLikes({ likes: selected }));
-		console.log("These are the final likes: ", likes);
+	const saveLikes = async () => {
+		const likesD = Object.keys(cuisineLikeDict).filter(
+			(key) => cuisineLikeDict[key]
+		);
+		if (likesD.length < 3) {
+			alert("Need at least 3 likes!");
+		} else {
+			console.log(user.uid);
+			dispatch(setLikes({ likes: likesD }));
+			await set(ref(db, "users/" + user.uid), {
+				likes: likesD,
+			});
+			console.log("These are the final likes: ", likesD);
+			navigation.navigate("Inside");
+		}
 	};
 
 	return (
@@ -71,7 +78,7 @@ const CuisineGrid = ({ selectedLikes, setSelectedLikes }) => {
 				<CuisineClickable
 					key={cuisine}
 					text={cuisine}
-					isSelected={selected && selected.includes(cuisine)}
+					isSelected={cuisineLikeDict[cuisine]}
 					toggleSelection={() => toggleSelection(cuisine)}
 				/>
 			))}
