@@ -10,14 +10,18 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.6.3",
+    "@react-navigation/native": "^6.1.17",
+    "@react-navigation/native-stack": "^6.9.26",
     "expo": "~51.0.9",
     "expo-status-bar": "~1.12.1",
+    "firebase": "^10.12.2",
     "react": "18.2.0",
     "react-native": "0.74.1",
     "react-native-gesture-handler": "~2.16.1",
+    "react-native-maps": "1.14.0",
     "react-native-reanimated": "~3.10.1",
-    "reanimated-bottom-sheet": "^1.0.0-alpha.22",
-    "react-native-maps": "1.14.0"
+    "react-navigation": "^5.0.0",
+    "reanimated-bottom-sheet": "^1.0.0-alpha.22"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
