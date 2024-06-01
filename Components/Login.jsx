@@ -15,6 +15,8 @@ import {
 	signInWithEmailAndPassword,
 } from "firebase/auth";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { getDatabase, ref, set } from "firebase/database";
+import { db } from "../FirebaseConfig";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +24,7 @@ const Login = ({ navigation }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [user, setUser] = useState(null);
 	const auth = FIREBASE_AUTH;
 
 	const signIn = async () => {
@@ -37,6 +40,11 @@ const Login = ({ navigation }) => {
 		}
 	};
 
+	const sanitizeEmail = (email) => {
+		return email.replace(/\./g, ',');// fixing email coz apparently no . allowed in key
+		//might be better to use unique id
+	};
+
 	const signUp = async () => {
 		setLoading(true);
 		try {
@@ -46,14 +54,24 @@ const Login = ({ navigation }) => {
 				password
 			);
 			console.log(response);
+			setUser(response.user.email);
+			await createUserInDatabase(response.user.email);//trying to store in database
 			alert("Check your emails!");
 		} catch (error) {
 			console.log(error);
 			alert("Sign up failed: " + error.message);
 		} finally {
 			setLoading(false);
-			navigation.navigate("Cuisine");
+			navigation.navigate("Cuisine", { user: user });
 		}
+	};
+
+
+	const createUserInDatabase = async (email) => {
+		const sanitizedEmail = sanitizeEmail(email);
+		await set(ref(db, 'users/' + sanitizedEmail), {
+			//likes: ["apples", "bananas", "carrots"]
+		});
 	};
 
 	return (

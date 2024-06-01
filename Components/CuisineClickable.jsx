@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
-const CuisineClickable = ({ text }) => {
-	const [selected, setSelected] = useState(false);
 
+// const CuisineClickable = ({ text }) => {
+// 	const [selected, setSelected] = useState(false);
+
+// 	return (
+// 		<TouchableOpacity
+// 			style={[styles.oval, selected && styles.selectedOval]}
+// 			onPress={() => setSelected(!selected)}
+// 		>
+// 			<Text style={styles.ovalText}>{text}</Text>
+// 		</TouchableOpacity>
+// 	);
+// };
+
+const CuisineClickable = ({ text, isSelected, toggleSelection }) => {
 	return (
 		<TouchableOpacity
-			style={[styles.oval, selected && styles.selectedOval]}
-			onPress={() => setSelected(!selected)}
+			style={[styles.oval, isSelected && styles.selectedOval]}
+			onPress={toggleSelection}
 		>
 			<Text style={styles.ovalText}>{text}</Text>
 		</TouchableOpacity>
