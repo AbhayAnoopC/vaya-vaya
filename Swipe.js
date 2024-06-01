@@ -3,8 +3,8 @@ import React, { useCallback, useRef } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import MapView from 'react-native-maps';
 
+import Map from './Map.jsx'
 
 const Swipe = () => {
   const bottomSheetRef = useRef(null);
@@ -19,7 +19,8 @@ const Swipe = () => {
       <View style={styles.container}>
         {/* <Button title="do someting" /> */}
         <View style={styles.container}>
-      <MapView style={styles.map} />
+        <Map/>
+
     </View>
         <BottomSheet
           ref={bottomSheetRef}

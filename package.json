@@ -17,7 +17,8 @@
     "react-native-gesture-handler": "~2.16.1",
     "react-native-reanimated": "~3.10.1",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
-    "react-native-maps": "1.14.0"
+    "react-native-maps": "1.14.0",
+    "expo-location": "~17.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
