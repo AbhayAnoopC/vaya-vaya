@@ -65,15 +65,11 @@ const CuisineGrid = ({ navigation }) => {
 	});
 	const [age, setAge] = useState("");
 	const [allergies, setAllergies] = useState("");
-	// const [priceRange, setPriceRange] = useState("");
 	const [dietaryRestrictions, setDietaryRestrictions] = useState("");
-	// const [julepUserId, setJulepUserId] = useState("");
 	const user = useSelector(selectUser);
 	const dispatch = useDispatch();
-	// const likes = useSelector(selectLikes);
 	const API_KEY =
 		"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwYmQ1M2ZlZC1jMmY3LTRkNDAtYjEyMC04YmUwZGNhYTkyZDEiLCJlbWFpbCI6InJ1c2hhYW4uY2hhd2xhQGdtYWlsLmNvbSIsImlhdCI6MTcxNzEzMDExMCwiZXhwaXJlc0luIjoiMXkiLCJyYXRlTGltaXRQZXJNaW51dGUiOjM1MDAsInF1b3RhUmVzZXQiOiIxaCIsImNsaWVudEVudmlyb25tZW50Ijoic2VydmVyIiwic2VydmVyRW52aXJvbm1lbnQiOiJwcm9kdWN0aW9uIiwidmVyc2lvbiI6InYwLjIiLCJleHAiOjE3NDg2ODc3MTB9.00eHvdV4xZSLaZL-VkGZnihYDeNbIIGxa0r8rS8_CSUJ6HmEBJByDLERcUbRrwxh20zq1jAWh29s5tYxBBFOcg";
-	//eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyZGU4YjY5OC05M2ZmLTQ5OGEtYWYzZC1jMDczNmFiZjlhYzciLCJlbWFpbCI6ImNvbXBzY2lncHRAZ21haWwuY29tIiwiaWF0IjoxNzE3Mjk2NTM2LCJleHBpcmVzSW4iOiIxeSIsInJhdGVMaW1pdFBlck1pbnV0ZSI6MzUwMCwicXVvdGFSZXNldCI6IjFoIiwiY2xpZW50RW52aXJvbm1lbnQiOiJzZXJ2ZXIiLCJzZXJ2ZXJFbnZpcm9ubWVudCI6InByb2R1Y3Rpb24iLCJ2ZXJzaW9uIjoidjAuMiIsImV4cCI6MTc0ODg1NDEzNn0.mnX50Ep1hXbNHcapCBzSNHtdweCP5fev008dRCKMsF2mxP-0DNGQCDZCzs-4gDAyqY-PFdwKkBEhBQOBiBLY2A
 	const createUserAboutStr = () => {
 		const likesD = Object.keys(cuisineLikeDict).filter(
 			(key) => cuisineLikeDict[key]
@@ -85,8 +81,6 @@ const CuisineGrid = ({ navigation }) => {
 			(key) => priceRangeDict[key]
 		);
 
-		// const username = user.displayName ? user.displayName : "Anon"
-
 		let str = "An individual that ";
 
 		let likesNoEnd = "likes these cuisines: ";
@@ -95,12 +89,10 @@ const CuisineGrid = ({ navigation }) => {
 
 		let dislikesNoEnd = "They dislike these cuisines: ";
 		dislikesD.forEach((cuisine) => (dislikesNoEnd += `${cuisine},`));
-		// dislikes[dislikes.length - 1] = ".";
 		let dislikes = dislikesNoEnd.substring(0, dislikesNoEnd.length - 1) + ".";
 
 		let priceRangeNoEnd = "They prefer these price ranges: ";
 		priceRangeD.forEach((price) => (priceRangeNoEnd += `${price},`));
-		// priceRange[priceRange.length - 1] = ".";
 		let priceRange =
 			priceRangeNoEnd.substring(0, priceRangeNoEnd.length - 1) + ".";
 
@@ -131,7 +123,6 @@ const CuisineGrid = ({ navigation }) => {
 		});
 		const data = await response.json();
 		console.log("This is the id in create method: ", data);
-		// setJulepUserId(data.id);
 		return data.id;
 	};
 
