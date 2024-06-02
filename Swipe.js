@@ -4,7 +4,8 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Map from './Map.jsx'
 import * as Notifications from 'expo-notifications';
-
+import Placard from './Placard.jsx';
+import tw from 'twrnc';
 const Swipe = () => {
   const bottomSheetRef = useRef(null);
 
@@ -28,8 +29,9 @@ const Swipe = () => {
           opacity={1.9}
         >
           <BottomSheetView style={styles.contentContainer}>
-            <Text>Awesome 🎉</Text>
-            <Button title="notification make" onPress={schedulePushNotification}></Button>
+            <Text style={tw`pb-4`}>Top Places For You :</Text>
+            {/* <Button title="notification make" onPress={schedulePushNotification}></Button> */}
+            <Placard/>
           </BottomSheetView>
         </BottomSheet>
       </View>

@@ -117,7 +117,7 @@ const Login = ({ navigation }) => {
 						<>
 						<View style={tw`flex-row justify-center`}>
 					<View style={tw`flex-col justify-between h-28 mt-8`}>	   
-					<TouchableOpacity style={[tw`bg-black rounded-lg justify-between  text-center h-12 w-78`, styles.button]} onPress={signUp}>
+					<TouchableOpacity style={[tw`bg-black rounded-lg justify-between  text-center h-12 w-78`, styles.button]} onPress={signIn}>
       						<Text style={tw`px-5 py-3 text-md justify-center text-center text-white`}>Log In</Text>
     				</TouchableOpacity>
 					<TouchableOpacity style={[tw`bg-black rounded-lg justify-between  text-center h-12 w-78`, styles.button]} onPress={signUp}>
