@@ -3,6 +3,7 @@
 **Enhancing Your Dining Experience in Real-Time**
 
 **Paurav H Param, Rushaan Chawla, Abhay Anoop C**
+
 **Jugaad Hacks May 2024: Summer of AI**
 **Jun 2 2024**
 
