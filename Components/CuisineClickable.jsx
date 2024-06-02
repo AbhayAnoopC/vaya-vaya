@@ -18,7 +18,7 @@ import { TouchableOpacity, Text, StyleSheet } from "react-native";
 const CuisineClickable = ({ text, isSelected, toggleSelection }) => {
 	return (
 		<TouchableOpacity
-			style={[styles.oval, isSelected && styles.selectedOval]}
+			style={[styles.oval, isSelected && styles.selectedOval, isSelected ? styles.selectedText : styles.notselectedText]}
 			onPress={toggleSelection}
 		>
 			<Text style={styles.ovalText}>{text}</Text>
@@ -32,16 +32,19 @@ const styles = StyleSheet.create({
 		height: 50,
 		borderRadius: 25,
 		borderWidth: 1,
-		borderColor: "#ccc",
+		borderColor: "#000",
 		justifyContent: "center",
 		alignItems: "center",
 		margin: 5,
 	},
 	selectedOval: {
-		backgroundColor: "blue",
+		backgroundColor: "#B2B2B2",
 	},
-	ovalText: {
-		color: "#000",
+	selectedText: {
+		color: "#FFFFFF",
+	},
+	notselectedText: {
+		color: "#000000",
 	},
 });
 
