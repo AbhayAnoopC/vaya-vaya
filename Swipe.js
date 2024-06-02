@@ -4,14 +4,17 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Map from './Map.jsx'
 import * as Notifications from 'expo-notifications';
-
+import Placard from './Placard.jsx';
+import tw from 'twrnc';
+import { useSelector } from 'react-redux';
 const Swipe = () => {
   const bottomSheetRef = useRef(null);
 
   const handleSheetChanges = useCallback((index) => {
     console.log("handleSheetChanges", index);
   }, []);
-
+  const places = useSelector(state => state.nav.places);
+  console.log("SWIPPPY:  ", places)
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -28,8 +31,9 @@ const Swipe = () => {
           opacity={1.9}
         >
           <BottomSheetView style={styles.contentContainer}>
-            {/* <Text>Awesome 🎉</Text>
-            <Button title="notification make" onPress={schedulePushNotification}></Button> */}
+ 
+            {places.map((place) => <Placard place={place} />)}
+            {/* <Placard/> */}
           </BottomSheetView>
         </BottomSheet>
       </View>

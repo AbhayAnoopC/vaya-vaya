@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
 	View,
 	StyleSheet,
+	TouchableOpacity,
 	Button,
 	Text,
 	TextInput,
@@ -18,6 +19,7 @@ import {
 import { getDatabase, ref, set } from "firebase/database";
 import { db } from "../FirebaseConfig";
 import KeyboardAvoidingView from "react-native/Libraries/Components/Keyboard/KeyboardAvoidingView";
+import tw from "twrnc";
 
 const cuisines = [
 	"Italian",
@@ -171,20 +173,26 @@ const CuisineGrid = ({ navigation }) => {
 	return (
 		<ScrollView contentContainerStyle={styles.scrollViewContent}>
 			<KeyboardAvoidingView>
-				<View style={styles.grid}>
-					<Text>Select at least 3 cuisines you enjoy</Text>
+				<View style={tw` w-82 my-20`}>
+					<Text>Tell Us more About You</Text>
+					<Text style={tw`text-lg font-bold mt-8`}>Select at least 3 cuisines you enjoy</Text>
+					<View style={tw`flex flex-row flex-wrap justify-around py-6`}>
 					{cuisines.map((cuisine) => (
 						<CuisineClickable
 							key={cuisine}
 							text={cuisine}
 							isSelected={cuisineLikeDict[cuisine]}
-							toggleSelection={() =>
-								toggleSelection(cuisine, setCuisineLikeDict)
+							toggleSelection={() =>{
+								console.log("click")
+								toggleSelection(cuisine, setCuisineLikeDict)}
 							}
 						/>
+
 					))}
+					</View>
 					{/* <Button onPress={fetchListofUsers} title="Test" /> */}
-					<Text>Select at least 3 cuisines you detest</Text>
+					<Text  style={tw`text-lg font-bold`}>Select at least 3 cuisines you detest</Text>
+					<View style={tw`flex flex-row flex-wrap justify-around py-6`}>
 					{cuisines.map((cuisine) => (
 						<CuisineClickable
 							key={cuisine}
@@ -195,22 +203,24 @@ const CuisineGrid = ({ navigation }) => {
 							}
 						/>
 					))}
-					<Text>Age</Text>
+					</View>
+					<Text  style={tw`text-lg font-bold`}>Age</Text>
 					<TextInput
-						style={styles.input}
+						style={tw`bg-slate-200 w-36 h-12 text-center`}
 						onChangeText={setAge}
 						value={age}
-						placeholder="Enter your age"
+						placeholder=""
 						keyboardType="numeric"
 					/>
-					<Text>Allergies</Text>
+					<Text  style={tw`text-lg font-bold pt-6`}>Allergies</Text>
 					<TextInput
-						style={styles.input}
+						style={tw`bg-slate-200 w-80 h-24 pl-4`}
 						onChangeText={setAllergies}
 						value={allergies}
-						placeholder="Enter your allergies (separated by commas)"
+						placeholder="Dairy, Peanuts ..."
 					/>
-					<Text>Price range</Text>
+					<Text  style={tw`text-lg font-bold pt-6`}>Price range</Text>
+					<View style={tw`flex flex-row flex-wrap justify-around py-6`}>
 					{["$", "$$", "$$$", "$$$$"].map((price) => (
 						<CuisineClickable
 							key={price}
@@ -218,15 +228,18 @@ const CuisineGrid = ({ navigation }) => {
 							isSelected={priceRangeDict[price]}
 							toggleSelection={() => toggleSelection(price, setPriceRangeDict)}
 						/>
-					))}
-					<Text>Dietary Restrictions</Text>
+					))}</View>
+					<Text style={tw`text-lg font-bold pt-6`}>Dietary Restrictions</Text>
 					<TextInput
-						style={styles.input}
+						style={tw`bg-slate-200 w-80 h-24 pl-4`}
 						onChangeText={setDietaryRestrictions}
 						value={dietaryRestrictions}
-						placeholder="Enter your dietary restrictions (separated by commas)"
+						placeholder="Enter Dislikes"
 					/>
-					<Button title="Confirm" onPress={savePreferences} />
+					<TouchableOpacity style={[tw`bg-black mt-6 rounded-lg justify-between  text-center h-12 w-78`, styles.button]} onPress={savePreferences}>
+      						<Text style={tw`px-5 py-3 text-md justify-center text-center text-white`}>Confirm</Text>
+    				</TouchableOpacity>
+					{/* <Button title="Confirm" onPress={savePreferences} /> */}
 				</View>
 			</KeyboardAvoidingView>
 		</ScrollView>

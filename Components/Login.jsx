@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../slices/navSlice";
 import tw from 'twrnc';
 
+
 const Stack = createNativeStackNavigator();
 
 const Login = ({ navigation }) => {
@@ -38,6 +39,15 @@ const Login = ({ navigation }) => {
 		try {
 			const response = await signInWithEmailAndPassword(auth, email, password);
 			console.log(response);
+			dispatch(
+				setUser({
+					displayName: response.user.displayName,
+					email: response.user.email,
+					uid: response.user.uid,
+				})
+			);
+			console.log("Yoo")
+			
 		} catch (error) {
 			console.log(error);
 			alert("Sign in failed: " + error.message);
@@ -117,7 +127,7 @@ const Login = ({ navigation }) => {
 						<>
 						<View style={tw`flex-row justify-center`}>
 					<View style={tw`flex-col justify-between h-28 mt-8`}>	   
-					<TouchableOpacity style={[tw`bg-black rounded-lg justify-between  text-center h-12 w-78`, styles.button]} onPress={signUp}>
+					<TouchableOpacity style={[tw`bg-black rounded-lg justify-between  text-center h-12 w-78`, styles.button]} onPress={signIn}>
       						<Text style={tw`px-5 py-3 text-md justify-center text-center text-white`}>Log In</Text>
     				</TouchableOpacity>
 					<TouchableOpacity style={[tw`bg-black rounded-lg justify-between  text-center h-12 w-78`, styles.button]} onPress={signUp}>
