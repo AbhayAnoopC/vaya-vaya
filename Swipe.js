@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, Button, SafeAreaView } from 'react-native';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Map from './Map.jsx'
+import * as Notifications from 'expo-notifications';
 
 const Swipe = () => {
-	const bottomSheetRef = useRef(null);
+  const bottomSheetRef = useRef(null);
 
-	const handleSheetChanges = useCallback((index) => {
-		console.log("handleSheetChanges", index);
-	}, []);
+  const handleSheetChanges = useCallback((index) => {
+    console.log("handleSheetChanges", index);
+  }, []);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -28,13 +29,23 @@ const Swipe = () => {
         >
           <BottomSheetView style={styles.contentContainer}>
             <Text>Awesome 🎉</Text>
+            <Button title="notification make" onPress={schedulePushNotification}></Button>
           </BottomSheetView>
         </BottomSheet>
       </View>
     </GestureHandlerRootView>
   );
 };
-
+async function schedulePushNotification() {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "You've got mail! 📬",
+      body: 'Here is the notification body',
+      data: { data: 'goes here', test: { test1: 'more data' } },
+    },
+    trigger: { seconds: 5 },
+  });
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,

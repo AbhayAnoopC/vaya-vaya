@@ -17,52 +17,52 @@ import { store } from "./store.js";
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-	const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-	useEffect(() => {
-		onAuthStateChanged(FIREBASE_AUTH, (user) => {
-			setUser(user);
-		});
-	}, []);
-  
-	return (
-		<Provider store={store}>
-			<NavigationContainer>
-				<Stack.Navigator initialRouteName="Login">
-					{user ? (
-						<>
-							{console.log("Im in A")}
-							<Stack.Screen
-								name="Inside"
-								component={Swipe}
-								options={{ headerShown: false }}
-							/>
-							<Stack.Screen
-								name="Cuisine"
-								component={CuisineGrid}
-								options={{ headerShown: false }}
-							/>
-						</>
-					) : (
-						<>
-							<Stack.Screen
-								name="Login"
-								component={Login}
-								options={{ headerShown: false }}
-							/>
-							{console.log("Im in B")}
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      setUser(user);
+    });
+  }, []);
 
-							<Stack.Screen
-								name="Inside"
-								component={Swipe}
-								options={{ headerShown: false }}
-							/>
-						</>
-					)}
-				</Stack.Navigator>
-			</NavigationContainer>
-		</Provider>
-	);
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          {user ? (
+            <>
+              {console.log("Im in A")}
+              <Stack.Screen
+                name="Inside"
+                component={Swipe}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Cuisine"
+                component={CuisineGrid}
+                options={{ headerShown: false }}
+              />
+            </>
+          ) : (
+            <>
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
+              />
+              {console.log("Im in B")}
+
+              <Stack.Screen
+                name="Inside"
+                component={Swipe}
+                options={{ headerShown: false }}
+              />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  );
 };
 
 const styles = StyleSheet.create({
