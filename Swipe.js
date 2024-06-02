@@ -31,7 +31,7 @@ const Swipe = () => {
           opacity={1.9}
         >
           <BottomSheetView style={styles.contentContainer}>
- 
+
             {places.map((place) => <Placard place={place} />)}
             {/* <Placard/> */}
           </BottomSheetView>
@@ -47,7 +47,7 @@ async function schedulePushNotification() {
       body: 'We found a restraunt you may like based on your prefrences and history😋',
       data: { data: 'goes here', test: { test1: 'more data' } },
     },
-    trigger: { seconds: 2 },
+    trigger: { seconds: 15 },
   });
 }
 const styles = StyleSheet.create({
