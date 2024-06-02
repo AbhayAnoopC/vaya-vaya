@@ -7,7 +7,9 @@
 **Jugaad Hacks May 2024: Summer of AI**
 **Jun 2 2024**
 
-## ![Login Page](images/LoginPage.jpeg)
+<div style="display: flex; justify-content: space-between;">
+<img src="assets/LoginPage.jpeg" alt="Login Page Screenshot" width="250">
+</div>
 
 ## Problem Statement
 
@@ -79,8 +81,10 @@ Vaya tackles the problem of real-time travel updates by offering a platform that
   - Focused on making the app simple and accessible, ensuring users can effortlessly find the best dining options.
 - **Visuals:**
   - Screenshots and design elements that highlight the user interface and overall design of the app.
-
-![Home Page1](images/HomePage1.jpeg) ![Home Page2](images/HomePage2.jpeg)
+<div style="display: flex; justify-content: space-between;">
+<img src="assets/HomePage1.jpeg" alt="Home Page Screenshot #1" width="250">
+<img src="assets/HomePage2.jpeg" alt="Home Page Screenshot #2" width="250">
+</div>
 
 ---
 
