@@ -13,6 +13,7 @@ import CuisineGrid from "./Components/CuisineGrid.jsx";
 import { Provider } from "react-redux";
 import { store } from "./store.js";
 
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {

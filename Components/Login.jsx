@@ -3,10 +3,12 @@ import {
 	TextInput,
 	Button,
 	StyleSheet,
+	Text,
 	ActivityIndicator,
 	KeyboardAvoidingView,
 	Keyboard,
 	TouchableWithoutFeedback,
+	TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
 import { FIREBASE_AUTH } from "../FirebaseConfig";
@@ -19,6 +21,7 @@ import { getDatabase, ref, set } from "firebase/database";
 import { db } from "../FirebaseConfig";
 import { useDispatch } from "react-redux";
 import { setUser } from "../slices/navSlice";
+import tw from 'twrnc';
 
 const Stack = createNativeStackNavigator();
 
@@ -81,7 +84,12 @@ const Login = ({ navigation }) => {
 		});
 	};
 
-	return (
+	return (<>	
+
+	<View style={tw`bg-slate-200 h-full`}>
+	<Text style={tw`flex flex-col mt-36 tracking-8 py-24 font-black h-60 text-6xl text-black text-center align-center `}>
+		VAYA
+	</Text>
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<View style={styles.container}>
 				<KeyboardAvoidingView
@@ -91,7 +99,7 @@ const Login = ({ navigation }) => {
 					<TextInput
 						value={email}
 						style={styles.inputs}
-						placeholder="Email"
+						placeholder="alexndra.chawla@gxmel.com"
 						autoCapitalize="none"
 						onChangeText={(text) => setEmail(text)}
 					></TextInput>
@@ -99,7 +107,7 @@ const Login = ({ navigation }) => {
 						secureTextEntry={true}
 						value={password}
 						style={styles.inputs}
-						placeholder="Password"
+						placeholder=" . . . . . ."
 						autoCapitalize="none"
 						onChangeText={(text) => setPassword(text)}
 					></TextInput>
@@ -107,13 +115,24 @@ const Login = ({ navigation }) => {
 						<ActivityIndicator szie="large" color="#0000ff" />
 					) : (
 						<>
-							<Button title="Login" onPress={signIn}></Button>
-							<Button title="Create account" onPress={signUp}></Button>
+						<View style={tw`flex-row justify-center`}>
+					<View style={tw`flex-col justify-between h-28 mt-8`}>	   
+					<TouchableOpacity style={[tw`bg-black rounded-lg justify-between  text-center h-12 w-78`, styles.button]} onPress={signUp}>
+      						<Text style={tw`px-5 py-3 text-md justify-center text-center text-white`}>Log In</Text>
+    				</TouchableOpacity>
+					<TouchableOpacity style={[tw`bg-black rounded-lg justify-between  text-center h-12 w-78`, styles.button]} onPress={signUp}>
+      						<Text style={tw`px-5 py-3 text-md justify-center text-center text-white`}>Sign Up</Text>
+    				</TouchableOpacity>
+					</View></View>
+					
+							{/* <Button style={{ backgroundColor: 'black' }} title="Login" onPress={signIn}></Button>
+							<Button title="Create account" onPress={signUp}></Button> */}
+						
 						</>
 					)}
 				</KeyboardAvoidingView>
 			</View>
-		</TouchableWithoutFeedback>
+		</TouchableWithoutFeedback></View></>
 	);
 };
 
@@ -133,7 +152,7 @@ const styles = StyleSheet.create({
 		marginVertical: 4,
 		height: 50,
 		borderWidth: 1,
-		borderRadius: 4,
+		borderRadius: 8,
 		padding: 10,
 		backgroundColor: "#fff",
 	},
