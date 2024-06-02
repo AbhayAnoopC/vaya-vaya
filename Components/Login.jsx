@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../slices/navSlice";
 import tw from 'twrnc';
 
+
 const Stack = createNativeStackNavigator();
 
 const Login = ({ navigation }) => {
@@ -38,6 +39,15 @@ const Login = ({ navigation }) => {
 		try {
 			const response = await signInWithEmailAndPassword(auth, email, password);
 			console.log(response);
+			dispatch(
+				setUser({
+					displayName: response.user.displayName,
+					email: response.user.email,
+					uid: response.user.uid,
+				})
+			);
+			console.log("Yoo")
+			
 		} catch (error) {
 			console.log(error);
 			alert("Sign in failed: " + error.message);

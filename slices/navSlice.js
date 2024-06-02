@@ -4,6 +4,7 @@ const initialState = {
 	user: null,
 	likes: [],
 	dislikes: [],
+	places: [],
 };
 
 export const navSlice = createSlice({
@@ -19,15 +20,18 @@ export const navSlice = createSlice({
 		setDislikes: (state, action) => {
 			state.dislikes = action.payload;
 		},
+		setPlaces : (state, action) => {
+			state.places = action.payload;
+		}
 	},
 });
 
-export const { setUser, setLikes, setDislikes } = navSlice.actions;
+export const { setUser, setLikes, setDislikes, setPlaces } = navSlice.actions;
 
 // Selectors
 
 export const selectUser = (state) => state.nav.user;
 export const selectLikes = (state) => state.nav.likes;
 export const selectDislikes = (state) => state.nav.dislikes;
-
+export const selectPlaces = (state) => state.nav.places;
 export default navSlice.reducer;
