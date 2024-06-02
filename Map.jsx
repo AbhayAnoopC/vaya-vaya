@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
+const GOOGLE_PLACES_API_KEY = "AIzaSyAQKFbgLqW8T7gteciqegLunAhS0tUZzkY";
+
 const Map = () => {
 	const [mapRegion, setMapRegion] = useState({
 		latitude: 44.131,
@@ -11,6 +13,7 @@ const Map = () => {
 		longitudeDelta: 0.0422,
 	});
 	const [errorMsg, setErrorMsg] = useState(null);
+	const [initialFetchDone, setInitialFetchDone] = useState(false);
 
 	const userLocation = async () => {
 		let { status } = await Location.requestForegroundPermissionsAsync();
@@ -22,12 +25,66 @@ const Map = () => {
 		let location = await Location.getCurrentPositionAsync({
 			enableHighAccuracy: true,
 		});
-		setMapRegion({
+		const currentRegion = {
 			latitude: location.coords.latitude,
 			longitude: location.coords.longitude,
 			latitudeDelta: 0.09133,
 			longitudeDelta: 0.0422,
-		});
+		};
+		setMapRegion(currentRegion);
+
+		if (!initialFetchDone) {
+			fetchNearbyRestaurants(currentRegion.latitude, currentRegion.longitude);
+			setInitialFetchDone(true);
+		}
+	};
+
+	const fetchNearbyRestaurants = async (latitude, longitude) => {
+		const requestBody = {
+			includedTypes: ["restaurant"],
+			maxResultCount: 5,
+			locationRestriction: {
+				circle: {
+					center: {
+						latitude,
+						longitude,
+					},
+					radius: 2000.0, // 5 km radius
+				},
+			},
+		};
+
+		console.log("Request Body:", JSON.stringify(requestBody));
+
+		try {
+			const response = await fetch(
+				"https://places.googleapis.com/v1/places:searchNearby",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						"X-Goog-Api-Key": GOOGLE_PLACES_API_KEY,
+						"X-Goog-FieldMask":
+							"places.displayName,places.formattedAddress,places.types,places.location",
+					},
+					body: JSON.stringify(requestBody),
+				}
+			);
+
+			console.log("Response Status:", response.status);
+
+			if (!response.ok) {
+				const errorText = await response.text();
+				throw new Error(
+					`HTTP error! status: ${response.status}, response: ${errorText}`
+				);
+			}
+
+			const data = await response.json();
+			console.log("Places:", data.places);
+		} catch (error) {
+			console.error("Error fetching nearby restaurants:", error);
+		}
 	};
 
 	useEffect(() => {
@@ -36,22 +93,19 @@ const Map = () => {
 		const locationWatcher = Location.watchPositionAsync(
 			{
 				accuracy: Location.Accuracy.High,
-				timeInterval: 1000,
-				distanceInterval: 100,
+				timeInterval: 5000,
+				distanceInterval: 10,
 			},
 			(location) => {
-				setMapRegion({
+				const currentRegion = {
 					latitude: location.coords.latitude,
 					longitude: location.coords.longitude,
 					latitudeDelta: 0.09133,
 					longitudeDelta: 0.0422,
-				});
-				console.log(
-					"Long: ",
-					location.coords.longitude,
-					"Latti : ",
-					location.coords.latitude
-				);
+				};
+				setMapRegion(currentRegion);
+
+				fetchNearbyRestaurants(currentRegion.latitude, currentRegion.longitude);
 			}
 		);
 
@@ -73,18 +127,17 @@ const Map = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: 'grey',
-		overflow: 'hidden',
-		alignItems: 'center',
-		justifyContent: 'center',
-
+		backgroundColor: "grey",
+		overflow: "hidden",
+		alignItems: "center",
+		justifyContent: "center",
 	},
 	map: {
 		...StyleSheet.absoluteFillObject,
-		width: '100%',
+		width: "100%",
 		saspectRatio: 16 / 9,
 		borderRadius: 10,
-		height: '60%'
+		height: "60%",
 	},
 });
 
