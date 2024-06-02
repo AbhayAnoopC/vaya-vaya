@@ -19,9 +19,31 @@ Notifications.setNotificationHandler({
 const NotificationsLayout = () => {
     const [expoPushToken, setExpoPushToken] = useState();
     //const [expoPushToken, setExpoPushToken] = useState<String>();
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
 
     useEffect(() => {
-        registerForPushNotificationsAsync().then(token => token && setExpoPushToken(token))
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token))
+
+        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification);
+        });
+
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            console.log(response);
+        });
+
+        // return () => {
+        //     Notifications.removeNotificationSubscription(notificationListener.current);
+        //     Notifications.removeNotificationSubscription(responseListener.current);
+        // };
+        return () => {
+            notificationListener.current &&
+                Notifications.removeNotificationSubscription(notificationListener.current);
+            responseListener.current &&
+                Notifications.removeNotificationSubscription(responseListener.current);
+        };
     }, []);
 
     console.log('Token: ', expoPushToken);

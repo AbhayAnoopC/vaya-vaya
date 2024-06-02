@@ -25,14 +25,13 @@ const Swipe = () => {
         </View>
         <BottomSheet
           ref={bottomSheetRef}
-          onChange={handleSheetChanges}
+          onChange={schedulePushNotification}
           snapPoints={['40%', '90%']}
           //overDragResistanceFactor = {10}
           opacity={1.9}
         >
           <BottomSheetView style={styles.contentContainer}>
-            <Text style={tw`pb-4`}>Top 🎉</Text>
-            {/* <Button title="notification make" onPress={schedulePushNotification}></Button> */}
+ 
             {places.map((place) => <Placard place={place} />)}
             {/* <Placard/> */}
           </BottomSheetView>
@@ -44,11 +43,11 @@ const Swipe = () => {
 async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "You've got mail! 📬",
-      body: 'Here is the notification body',
+      title: "WE FOUND YOU A MATCH 🥵",
+      body: 'We found a restraunt you may like based on your prefrences and history😋',
       data: { data: 'goes here', test: { test1: 'more data' } },
     },
-    trigger: { seconds: 5 },
+    trigger: { seconds: 2 },
   });
 }
 const styles = StyleSheet.create({
@@ -65,4 +64,3 @@ const styles = StyleSheet.create({
   }
 });
 export default Swipe
-
